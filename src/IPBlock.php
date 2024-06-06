@@ -397,7 +397,7 @@ abstract class IPBlock implements Iterator, ArrayAccess, Countable
 	}
 
 // Countable
-	public function count()
+	public function count(): int
 	{
 		$n = $this->getNbAddresses();
 		if ( $n > PHP_INT_MAX ) {
@@ -410,7 +410,7 @@ abstract class IPBlock implements Iterator, ArrayAccess, Countable
 
 	protected $position = 0;
 
-	public function rewind()
+	public function rewind(): void
 	{
 		$this->position = gmp_init(0);
 	}
@@ -420,29 +420,29 @@ abstract class IPBlock implements Iterator, ArrayAccess, Countable
 		return $this->first_ip->plus(gmp_strval($this->position));
 	}
 
-	public function key()
+	public function key(): mixed
 	{
 		return $this->position;
 	}
 
-	public function next()
+	public function next(): void
 	{
 		$this->position = gmp_add($this->position,1);
 	}
 
-	public function valid()
+	public function valid(): bool
 	{
 		return gmp_cmp($this->position,0) >= 0 && gmp_cmp($this->position, $this->getNbAddresses()) < 0;
 	}
 
 // ArrayAccess
 
-	public function offsetExists($offset)
+	public function offsetExists($offset): bool
 	{
 		return gmp_cmp($offset,0) >= 0 && gmp_cmp($offset, $this->getNbAddresses()) < 0;
 	}
 
-	public function offsetGet($offset)
+	public function offsetGet($offset): mixed
 	{
 		if ( ! $this->offsetExists($offset) ) {
 			throw new OutOfBoundsException("Offset $offset does not exists");
@@ -450,12 +450,12 @@ abstract class IPBlock implements Iterator, ArrayAccess, Countable
 		return $this->first_ip->plus($offset);
 	}
 
-	public function offsetSet($offset, $value)
+	public function offsetSet($offset, $value): void
 	{
 		throw new LogicException('Setting IP in block is not supported');
 	}
 
-	public function offsetUnset($offset)
+	public function offsetUnset($offset): void
 	{
 		throw new LogicException('Unsetting IP in block is not supported');
 	}
