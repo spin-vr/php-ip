@@ -415,7 +415,7 @@ abstract class IPBlock implements Iterator, ArrayAccess, Countable
 		$this->position = gmp_init(0);
 	}
 
-	public function current()
+	public function current(): mixed
 	{
 		return $this->first_ip->plus(gmp_strval($this->position));
 	}
