@@ -30,34 +30,34 @@ class IPBlockIterator implements Iterator
 		$this->nb_blocks = $nb_blocks;
 	}
 
-	public function count()
+	public function count(): int
 	{
 		return gmp_strval($this->nb_blocks);
 	}
 
-	public function rewind()
+	public function rewind(): void
 	{
 		$this->position = gmp_init(0);
 		$this->current_block = $this->first_block;
 	}
 
-	public function current()
+	public function current(): mixed
 	{
 		return $this->current_block;
 	}
 
-	public function key()
+	public function key(): mixed
 	{
 		return $this->position;
 	}
 
-	public function next()
+	public function next(): void
 	{
 		$this->position = gmp_add($this->position,1);
 		$this->current_block = $this->current_block->plus(1);
 	}
 
-	public function valid()
+	public function valid(): bool
 	{
 		return gmp_cmp($this->position,0) >= 0 && gmp_cmp($this->position, $this->nb_blocks) < 0;
 	}
